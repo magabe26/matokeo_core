@@ -53,6 +53,40 @@ void run_results_xml_to_string_decoder_example() async {
   }
 }
 
+Parser nonCaseSensitiveChars(String str) {
+  if ((str == null) || str.isEmpty) {
+    return undefined('argument "str" can not be empty or null');
+  }
+  Parser p;
+  str.split('').forEach((c) {
+    final parser = pattern('${c.toLowerCase()}${c.toUpperCase()}');
+    if (p == null) {
+      p = parser;
+    } else {
+      p = p.seq(parser);
+    }
+  });
+  return p;
+}
+
+run_parsers_test() {
+  // print('\\'.runes);
+  String _nameStartChars = ':A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF'
+      '\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001'
+      '\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD';
+  String _nameChars = '-.0-9\u00B7\u0300-\u036F\u203F-\u2040$_nameStartChars';
+  // print(['a','b'].join());
+  //print(pattern('a-c').matchesSkipping('churabxX\\/'));
+
+  print(nonCaseSensitiveChars('chura')
+      .flatten()
+      .parse('chura CHURA ChuRaa mkia churrA'));
+
+  print(string('CHUR')
+      .flatten()
+      .matchesSkipping('chura CHURA ChuRaa mkia churrA'));
+}
 main() {
-  run_results_xml_to_string_decoder_example();
+  //run_results_xml_to_string_decoder_example();
+  run_parsers_test();
 }
