@@ -36,6 +36,13 @@ mixin ResultsXmlParserMixin {
 
   Parser equal() => char('=');
 
+  /// In the following examples
+  ///    final str = '''
+  ///          chura CHURA ChurA ChUrA mkia is awesome
+  ///       ''';
+  ///
+  /// nonCaseSensitiveChars("chura").flatten().matchesSkipping(str);
+  /// returns [chura CHURA ChurA ChUrA]
   Parser nonCaseSensitiveChars(String str) {
     if ((str == null) || str.isEmpty) {
       return undefined('argument "str" can not be empty or null');
@@ -64,6 +71,15 @@ mixin ResultsXmlParserMixin {
       .seq(attributeValue())
       .seq(quote()));
 
+  /// In the following examples
+  ///    final str = '''
+  ///          <tag attr1 ="attribute1"> Text </tag>
+  ///          <TAG> TEXT </TAG>
+  ///            <tag/>
+  ///       ''';
+  ///  elementStartTag('tag'); matches both  <tag attr1 ="attribute1"> and  <TAG>
+  ///     while
+  ///  elementStartTag('tag',isClosed: true); matches only <tag/>
   Parser elementStartTag(
       {String tag, int maxNoOfAttributes = 6, bool isClosed = false}) {
     Parser attr;
@@ -97,6 +113,13 @@ mixin ResultsXmlParserMixin {
       .seq((tag == null) ? letter().plus() : nonCaseSensitiveChars(tag))
       .seq(end());
 
+  /// In the following examples
+  ///    final str = '''
+  ///          <tag attr1 ="attribute1"> Text </tag>
+  ///          <TAG> TEXT </TAG>
+  ///       ''';
+  ///  innerElement('tag'); matches both  <tag attr1 ="attribute1"> Text </tag>
+  ///  and  <TAG> TEXT </TAG>
   Parser innerElement(String tag,
           {Parser startTagElement, Parser endTagElement}) =>
       ((startTagElement != null) ? startTagElement : elementStartTag(tag: tag))
@@ -107,6 +130,13 @@ mixin ResultsXmlParserMixin {
           .seq(spaceOrNot())
           .seq((endTagElement != null) ? endTagElement : elementEndTag(tag));
 
+  /// In the following examples
+  ///    final str = '''
+  ///        <tr>  <tag attr1 ="attribute1"> Text </tag> </tr>
+  ///          <TAG> TEXT </TAG>
+  ///       ''';
+  ///  outerElement("tr",innerElement('tag'));
+  ///  matches  <tr>  <tag attr1 ="attribute1"> Text </tag> </tr>
   Parser outerElement(String tag, Parser innerElement,
       {Parser startTagElement, Parser endTagElement}) {
     return ((startTagElement != null)
