@@ -32,7 +32,7 @@ mixin ResultsXmlParserMixin {
 
   Parser spaceOrNot() => whitespace().star();
 
-  Parser quate() => char('"') | char("'");
+  Parser quote() => char('"') | char("'");
 
   Parser equal() => char('=');
 
@@ -44,9 +44,9 @@ mixin ResultsXmlParserMixin {
 
   Parser attribute([String attr]) => (attributeKey(attr)
       .seq(equal())
-      .seq(quate())
+      .seq(quote())
       .seq(attributeValue())
-      .seq(quate()));
+      .seq(quote()));
 
   Parser elementStartTag(
       {String tag, int maxNoOfAttributes = 6, bool isClosed = false}) {
@@ -93,7 +93,9 @@ mixin ResultsXmlParserMixin {
 
   Parser outerElement(String tag, Parser innerElement,
       {Parser startTagElement, Parser endTagElement}) {
-    return ((startTagElement != null) ? startTagElement : elementStartTag(tag: tag))
+    return ((startTagElement != null)
+            ? startTagElement
+            : elementStartTag(tag: tag))
         .seq(spaceOrNot())
         .seq(innerElement)
         .seq(spaceOrNot())
