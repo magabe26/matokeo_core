@@ -15,4 +15,5 @@ export 'src/xml_to_stream.dart';
 export 'src/cached_result_data.dart';
 export 'src/results_bloc_base.dart';
 export 'src/text_to_map.dart';
+export 'src/results_urls.dart';
 
