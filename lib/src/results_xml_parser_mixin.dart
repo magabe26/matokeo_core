@@ -56,7 +56,7 @@ mixin ResultsXmlParserMixin {
       (letter() | digit() | pattern(otherAttributeChars.join())).star();
 
   Parser attributeKey([String key]) =>
-      (key == null) ? word().plus() : string(key);
+      (key == null) ? word().plus() : nonCaseSensitiveChars(key);
 
   Parser attribute([String attr]) => (attributeKey(attr)
       .seq(equal())
@@ -78,7 +78,7 @@ mixin ResultsXmlParserMixin {
     }
 
     Parser p = start()
-        .seq((tag == null) ? letter().plus() : string(tag))
+        .seq((tag == null) ? letter().plus() : nonCaseSensitiveChars(tag))
         .seq(spaceOrNot())
         .seq(attr)
         .seq(spaceOrNot());
@@ -94,7 +94,7 @@ mixin ResultsXmlParserMixin {
 
   Parser elementEndTag([String tag]) => start()
       .seq(slash())
-      .seq((tag == null) ? letter().plus() : string(tag))
+      .seq((tag == null) ? letter().plus() : nonCaseSensitiveChars(tag))
       .seq(end());
 
   Parser innerElement(String tag,
