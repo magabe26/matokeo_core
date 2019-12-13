@@ -36,6 +36,22 @@ mixin ResultsXmlParserMixin {
 
   Parser equal() => char('=');
 
+  Parser nonCaseSensitiveChars(String str) {
+    if ((str == null) || str.isEmpty) {
+      return undefined('argument "str" can not be empty or null');
+    }
+    Parser p;
+    str.split('').forEach((c) {
+      final parser = pattern('${c.toLowerCase()}${c.toUpperCase()}');
+      if (p == null) {
+        p = parser;
+      } else {
+        p = p.seq(parser);
+      }
+    });
+    return p;
+  }
+
   Parser attributeValue() =>
       (letter() | digit() | pattern(otherAttributeChars.join())).star();
 
