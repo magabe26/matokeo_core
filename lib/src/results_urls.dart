@@ -45,7 +45,7 @@ class ResultsUrls {
   }
 
   static String getFullUrl(String baseUrl, String pathOrFilename) {
-    String bUrl = baseUrl;
-    return '$bUrl${getResultsPath(pathOrFilename)}';
+    String bUrl = baseUrl ?? '';
+    return '$bUrl${getResultsPath(pathOrFilename ?? '')}';
   }
 }
