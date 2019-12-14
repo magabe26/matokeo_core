@@ -1,4 +1,4 @@
-typedef String BaseUrlFinalizer({String url, String baseUrl});
+typedef String BaseUrlFinalizer(String baseUrl);
 
 class ResultsUrls {
   static String getBaseUrl(String url, {BaseUrlFinalizer baseUrlFinalizer}) {
@@ -28,7 +28,7 @@ class ResultsUrls {
     list.removeLast();
     bUrl = list.join("/");
     if (baseUrlFinalizer != null) {
-      return baseUrlFinalizer(url: url, baseUrl: '$protocolStr$bUrl/');
+      return baseUrlFinalizer('$protocolStr$bUrl/');
     } else {
       return '$protocolStr$bUrl/';
     }
