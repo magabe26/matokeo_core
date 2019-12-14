@@ -248,7 +248,8 @@ class GetResultsXmFailed implements Exception {
   }
 }
 
-///the xml returned is not checked by the function ,so it maybe invalid
+///The xml returned is not checked by the function ,so it maybe invalid
+///if you wish to keep one or more CommonDirtTags , set  removeCommonDirtTags = false
 Future<String> getResultsXml(String url,
     {Set<DirtyTag> dirtyTags,
     List<String> keepTags = const <String>[
@@ -260,15 +261,17 @@ Future<String> getResultsXml(String url,
       'table',
       'body'
     ],
-    List<String> keepAttributes = const <String>['href']}) async {
+    List<String> keepAttributes = const <String>['href'],
+    bool removeCommonDirtTags = true}) async {
   try {
     var html = await results_html_downloader.downloadResultsHtml(url);
 
-    if (dirtyTags != null) {
+    if ((dirtyTags != null) && removeCommonDirtTags) {
       dirtyTags.addAll(_commonDirtTags);
     }
 
-    html = await removeDirtyTags(html, dirtyTags ?? _commonDirtTags);
+    html = await removeDirtyTags(html,
+        removeCommonDirtTags ? (dirtyTags ?? _commonDirtTags) : dirtyTags);
     html = await removeAttributes(html, keepAttributes: keepAttributes);
     html = await removeEmptyTags(html, keepTags: keepTags);
     html = _replaceTable(html);
