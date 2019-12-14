@@ -4,7 +4,7 @@ class NonCaseSensitiveXmlElementsFinder {
   static Iterable<XmlElement> findAllElements(
       XmlParent xmlParent, String name) {
     if ((xmlParent == null) || (name == null) || name.isEmpty) {
-      return null;
+      return <XmlElement>[];
     }
     Iterable<XmlElement> elements = xmlParent.findAllElements(name);
     if ((elements == null) || elements.isEmpty) {
@@ -15,6 +15,6 @@ class NonCaseSensitiveXmlElementsFinder {
       elements = xmlParent.findAllElements(name.toUpperCase());
     }
 
-    return elements;
+    return elements ?? <XmlElement>[];
   }
 }
