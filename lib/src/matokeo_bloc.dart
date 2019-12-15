@@ -5,6 +5,6 @@
 
 import '../matokeo_core.dart';
 
-abstract class ResultsBlocBase<E, S> extends MBloc<E, S> {
-  Future<void> load(String xml);
+abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
+  Future<void> load(String xml,{String baseUrl});
 }
