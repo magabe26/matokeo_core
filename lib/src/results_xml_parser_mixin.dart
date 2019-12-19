@@ -112,22 +112,17 @@ mixin ResultsXmlParserMixin {
   ///       ''';
   ///  innerElement('tag'); matches both  <tag attr1 ="attribute1"> Text </tag>
   ///  and  <TAG> TEXT </TAG>
-  Parser innerElement(String tag,
-      {Parser startTagElement, Parser endTagElement}) {
-    return ((startTagElement != null)
-            ? startTagElement
-            : elementStartTag(tag: tag))
+  Parser innerElement(String tag, {Parser startTag, Parser endTag}) {
+    return ((startTag != null) ? startTag : elementStartTag(tag: tag))
         .seq(spaceOrNot())
         .seq(spaceOrNot()
             .seq(any()
-                .starLazy((endTagElement != null)
-                    ? endTagElement
-                    : elementEndTag(tag))
+                .starLazy((endTag != null) ? endTag : elementEndTag(tag))
                 .flatten('innerElement: Expected any text'))
             .pick(1)
             .optional(''))
         .seq(spaceOrNot())
-        .seq((endTagElement != null) ? endTagElement : elementEndTag(tag));
+        .seq((endTag != null) ? endTag : elementEndTag(tag));
   }
 
   /// In the following examples
@@ -138,13 +133,11 @@ mixin ResultsXmlParserMixin {
   ///  outerElement("tr",innerElement('tag'));
   ///  matches  <tr>  <tag attr1 ="attribute1"> Text </tag> </tr>
   Parser outerElement(String tag, Parser innerElement,
-      {Parser startTagElement, Parser endTagElement}) {
-    return ((startTagElement != null)
-            ? startTagElement
-            : elementStartTag(tag: tag))
+      {Parser startTag, Parser endTag}) {
+    return ((startTag != null) ? startTag : elementStartTag(tag: tag))
         .seq(spaceOrNot())
         .seq(innerElement)
         .seq(spaceOrNot())
-        .seq((endTagElement != null) ? endTagElement : elementEndTag(tag));
+        .seq((endTag != null) ? endTag : elementEndTag(tag));
   }
 }
