@@ -1,3 +1,9 @@
+/**
+ * Copyright 2019 - MagabeLab (Tanzania). All Rights Reserved.
+ * Author Edwin Magabe    edyma50@yahoo.com
+ */
+
+
 typedef String BaseUrlFinalizer(String baseUrl);
 
 class ResultsUrls {

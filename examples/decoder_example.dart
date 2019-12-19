@@ -42,7 +42,7 @@ void run_results_xml_to_string_decoder_example() async {
     ResultsXmlToStringDecoder(resultsParser.tdLinkParser())
         .decode(xml)
         .listen((String str) {
-      print('Result Str -----> $str \n\n');
+      print('Result Str -> $str \n\n');
     });
   } on GetResultsXmFailed catch (e) {
     print(e);

@@ -1,3 +1,8 @@
+/**
+ * Copyright 2019 - MagabeLab (Tanzania). All Rights Reserved.
+ * Author Edwin Magabe    edyma50@yahoo.com
+ */
+
 import 'package:xml/xml.dart';
 
 class NonCaseSensitiveXmlElementsFinder {

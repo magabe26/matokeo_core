@@ -10,7 +10,7 @@ import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
 import 'results_html_downloader.dart' as results_html_downloader;
 
-//A tag that contains non-results information
+///A tag that contains non-results information
 class DirtyTag extends Equatable {
   final String start;
   final String end;
