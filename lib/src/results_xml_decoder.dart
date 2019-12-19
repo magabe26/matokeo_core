@@ -22,6 +22,7 @@ abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
     return parser.flatten().matchesSkipping(xml);
   }
 
+  ///Map each parser result to a type T Object
   T mapParserResult(String result);
 
   @override
