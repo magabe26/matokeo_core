@@ -95,7 +95,8 @@ class _ResultsDecoderSink<T> extends StringConversionSinkBase {
   @override
   void close() {
     if (carry.isNotEmpty) {
-      throw Exception('Unable to parse remaining input: $carry');
+      throw Exception(
+          'ResultsXmlDecoder:: Unable to parse remaining input: $carry');
     }
     sink.close();
   }
