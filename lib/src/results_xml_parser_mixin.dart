@@ -5,8 +5,7 @@
 
 import 'package:petitparser/petitparser.dart';
 
-final _otherPermittedAttributeValueChars =
-    [':', '.', '/', '?', '&', '=', '%', '#', '_', '@', '-', '\\'].join();
+const _otherPermittedAttributeValueChars = ':./?&=%#_@-\\';
 
 ///Any results parser must mix with this mixin
 mixin ResultsXmlParserMixin {
