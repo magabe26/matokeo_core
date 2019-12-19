@@ -5,30 +5,16 @@
 
 import 'package:petitparser/petitparser.dart';
 
+final _otherPermittedAttributeValueChars =
+    [':', '.', '/', '?', '&', '=', '%', '#', '_', '@', '-', '\\'].join();
+
 ///Any results parser must mix with this mixin
 mixin ResultsXmlParserMixin {
-  static const otherAttributeChars = [
-    ':',
-    '.',
-    '/',
-    '?',
-    '&',
-    '=',
-    '%',
-    '#',
-    '_',
-    '@',
-    '-',
-    '\\'
-  ];
-
   Parser start() => char('<');
 
   Parser end() => char('>');
 
   Parser slash() => char('/');
-
-  Parser space() => whitespace();
 
   Parser spaceOrNot() => whitespace().star();
 
@@ -60,7 +46,7 @@ mixin ResultsXmlParserMixin {
   }
 
   Parser attributeValue() =>
-      (letter() | digit() | pattern(otherAttributeChars.join())).star();
+      (letter() | digit() | pattern(_otherPermittedAttributeValueChars)).star();
 
   Parser attributeKey([String key]) =>
       (key == null) ? word().plus() : nonCaseSensitiveChars(key);
