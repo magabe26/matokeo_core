@@ -7,15 +7,15 @@ import 'dart:convert';
 import 'package:petitparser/petitparser.dart';
 import 'package:meta/meta.dart';
 
-///Any NECTA results decoder , must extend this class, a subclass must pass a parser
-///that is responsible for parsing the required tags
+import 'xml_to_stream.dart';
+
+///Any NECTA results decoder must extend this class. A subclass must pass a parser
+///which is responsible for the parsing
 abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
   const ResultsXmlDecoder(this.parser) : assert(parser != null);
 
   final Parser parser;
 
-  ///Returns the list of string tags parsed by the parser, the subclass uses that list
-  ///to map to a list of other types, with the help of xml library to parse those strings
   List<String> convertStringList({@required String input}) {
     int end = RangeError.checkValidRange(0, null, input.length);
     var xml = input.substring(0, end);
@@ -40,6 +40,10 @@ abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
         })
         .where((obj) => (obj != null)) //filter null objects
         .toList(); /* Important Note: growable parameter must be set to true, by default ,growable is set to true*/
+  }
+
+  Stream<T> decode(String input) {
+    return xmlToStream(input).transform(this).expand((i) => i);
   }
 }
 
