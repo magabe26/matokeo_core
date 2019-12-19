@@ -82,16 +82,8 @@ mixin ResultsXmlParserMixin {
   ///  elementStartTag(tag:'tag',isClosed: true); matches only <tag/>
   Parser elementStartTag(
       {String tag, int maxNoOfAttributes = 6, bool isClosed = false}) {
-    Parser attr;
-
-    for (int i = 0; i < maxNoOfAttributes; ++i) {
-      Parser p = attribute().star();
-      if (attr == null) {
-        attr = p;
-      } else {
-        attr = attr.seq(spaceOrNot()).seq(p);
-      }
-    }
+    final Parser attr =
+        spaceOrNot().seq(attribute().star()).repeat(1, maxNoOfAttributes);
 
     Parser p = start()
         .seq((tag == null) ? letter().plus() : nonCaseSensitiveChars(tag))
