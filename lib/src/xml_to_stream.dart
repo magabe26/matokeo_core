@@ -3,6 +3,8 @@
  * Author Edwin Magabe    edyma50@yahoo.com
  */
 
+import 'dart:async';
+
 Stream<String> xmlToStream(String xml) async* {
   yield xml;
 }
