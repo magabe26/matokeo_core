@@ -77,9 +77,9 @@ mixin ResultsXmlParserMixin {
   ///          <TAG> TEXT </TAG>
   ///            <tag/>
   ///       ''';
-  ///  elementStartTag('tag'); matches both  <tag attr1 ="attribute1"> and  <TAG>
+  ///  elementStartTag(tag:'tag'); matches both  <tag attr1 ="attribute1"> and  <TAG>
   ///     while
-  ///  elementStartTag('tag',isClosed: true); matches only <tag/>
+  ///  elementStartTag(tag:'tag',isClosed: true); matches only <tag/>
   Parser elementStartTag(
       {String tag, int maxNoOfAttributes = 6, bool isClosed = false}) {
     Parser attr;
