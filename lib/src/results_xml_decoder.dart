@@ -9,8 +9,7 @@ import 'package:meta/meta.dart';
 
 ///Any NECTA results decoder , must extend this class, a subclass must pass a parser
 ///that is responsible for parsing the required tags
-abstract class ResultsXmlDecoder<S extends String, T extends List>
-    extends Converter<S, T> {
+abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
   const ResultsXmlDecoder(this.parser) : assert(parser != null);
 
   final Parser parser;
@@ -23,9 +22,25 @@ abstract class ResultsXmlDecoder<S extends String, T extends List>
     return parser.flatten().matchesSkipping(xml);
   }
 
+  T mapParserResult(String result);
+
   @override
-  Sink<S> startChunkedConversion(Sink<T> sink) =>
-      _ResultsDecoderSink<T>(sink, parser, this) as Sink<S>;
+  Sink<String> startChunkedConversion(Sink<List<T>> sink) =>
+      _ResultsDecoderSink<List<T>>(sink, parser, this);
+
+  @override
+  List<T> convert(String input) {
+    return convertStringList(input: input)
+        .map((parserResult) {
+          try {
+            return mapParserResult(parserResult);
+          } catch (_) {
+            return null;
+          }
+        })
+        .where((obj) => (obj != null)) //filter null objects
+        .toList(); /* Important Note: growable parameter must be set to true, by default ,growable is set to true*/
+  }
 }
 
 class _ResultsDecoderSink<T> extends StringConversionSinkBase {
@@ -38,7 +53,6 @@ class _ResultsDecoderSink<T> extends StringConversionSinkBase {
   final Parser parser;
   final Converter converter;
   String carry = '';
-
 
   @override
   void addSlice(String str, int start, int end, bool isLast) {

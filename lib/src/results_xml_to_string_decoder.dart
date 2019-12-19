@@ -6,12 +6,12 @@
 import 'package:petitparser/petitparser.dart';
 import 'results_xml_decoder.dart';
 
-class ResultsXmlToStringDecoder
-    extends ResultsXmlDecoder<String, List<String>> {
+///A simple example that shows how to implement ResultsXmlDecoder
+class ResultsXmlToStringDecoder extends ResultsXmlDecoder<String> {
   ResultsXmlToStringDecoder(Parser parser) : super(parser);
 
   @override
-  List<String> convert(String input) {
-    return convertStringList(input: input);
+  String mapParserResult(String result) {
+    return result;
   }
 }
