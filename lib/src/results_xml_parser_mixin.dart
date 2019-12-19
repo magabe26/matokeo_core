@@ -121,14 +121,22 @@ mixin ResultsXmlParserMixin {
   ///  innerElement('tag'); matches both  <tag attr1 ="attribute1"> Text </tag>
   ///  and  <TAG> TEXT </TAG>
   Parser innerElement(String tag,
-          {Parser startTagElement, Parser endTagElement}) =>
-      ((startTagElement != null) ? startTagElement : elementStartTag(tag: tag))
-          .seq(spaceOrNot())
-          .seq(any()
-              .starLazy(elementEndTag(tag))
-              .flatten('innerElement: Expected any text'))
-          .seq(spaceOrNot())
-          .seq((endTagElement != null) ? endTagElement : elementEndTag(tag));
+      {Parser startTagElement, Parser endTagElement}) {
+    return ((startTagElement != null)
+            ? startTagElement
+            : elementStartTag(tag: tag))
+        .seq(spaceOrNot())
+        .seq(spaceOrNot()
+            .seq(any()
+                .starLazy((endTagElement != null)
+                    ? endTagElement
+                    : elementEndTag(tag))
+                .flatten('innerElement: Expected any text'))
+            .pick(1)
+            .optional(''))
+        .seq(spaceOrNot())
+        .seq((endTagElement != null) ? endTagElement : elementEndTag(tag));
+  }
 
   /// In the following examples
   ///    final str = '''
