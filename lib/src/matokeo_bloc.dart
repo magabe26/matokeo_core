@@ -26,11 +26,10 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
   StreamSubscription _subscription;
   Stream _stream;
 
-  Future<void> unsubscribe() async {
+  Future<void> _unsubscribe() async {
     if ((_subscription != null) && (_stream != null)) {
       try {
         await _subscription.cancel();
-        print('----------------unsubscribe---------');
       } catch (_) {}
     }
   }
@@ -47,16 +46,16 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
     _completer = Completer();
 
     //unsubscribe previous stream
-    await unsubscribe();
+    await _unsubscribe();
 
     try {
-      eventsDispatcher(xml, baseUrl: baseUrl);
+      dispatchEvents(xml, baseUrl: baseUrl);
     } catch (e) {
       throw MatokeoBlocException(e.toString());
     }
   }
 
-  void eventsDispatcher(String xml, {String baseUrl});
+  void dispatchEvents(String xml, {String baseUrl});
 
   void decode<T>({
     @required String xml,
@@ -68,9 +67,9 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
     _subscription = _stream.listen(listener, onDone: onDone);
   }
 
-  /// A subclasss must call this when loading is completed
-  /// so to be able to reload or load other xml using this block
-  void blocCompleted() {
+  /// A subclass must call this when loading is completed
+  /// so to be able to reload or load new xml using this block
+  void complete() {
     if (!_completer.isCompleted) {
       _completer.complete();
     }
@@ -78,7 +77,7 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
 
   @override
   Future<void> dispose() async {
-    await unsubscribe();
+    await _unsubscribe();
     return super.dispose();
   }
 }
