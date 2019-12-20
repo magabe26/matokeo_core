@@ -3,9 +3,11 @@
  * Author Edwin Magabe    edyma50@yahoo.com
  */
 
-import '../matokeo_core.dart';
 import 'package:meta/meta.dart';
 import 'dart:async';
+
+import 'mbloc.dart';
+import 'results_xml_decoder.dart';
 
 typedef void OnDone();
 typedef void DecoderListener<T>(T entity);
