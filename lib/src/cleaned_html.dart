@@ -8,7 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
-import 'mdownloader.dart' as results_html_downloader;
+import 'mdownloader.dart' as html_downloader;
 
 ///A tag that contains non-results information
 class DirtyTag extends Equatable {
@@ -238,9 +238,9 @@ Future<String> removeEmptyTags(String html,
   return completer.future;
 }
 
-class GetResultsXmFailed implements Exception {
+class GetCleanedHtmlFailed implements Exception {
   String message;
-  GetResultsXmFailed(this.message);
+  GetCleanedHtmlFailed(this.message);
 
   @override
   String toString() {
@@ -248,9 +248,15 @@ class GetResultsXmFailed implements Exception {
   }
 }
 
-///The xml returned is not checked by the function ,so it maybe invalid
+String _replaceTable(String html) {
+  return html
+      .replaceAll('TABLE BORDER ', 'TABLE')
+      .replaceAll('table border', 'table');
+}
+
+///The returned html may be xml-compatible or not
 ///if you wish to keep one or more CommonDirtTags , set  removeCommonDirtTags = false
-Future<String> getResultsXml(
+Future<String> getCleanedHtml(
   String url, {
   Set<DirtyTag> dirtyTags,
   List<String> keepTags = const <String>[
@@ -266,7 +272,7 @@ Future<String> getResultsXml(
   bool removeCommonDirtTags = true,
 }) async {
   try {
-    var html = await results_html_downloader.download(url);
+    var html = await html_downloader.download(url);
 
     if ((dirtyTags != null) && removeCommonDirtTags) {
       dirtyTags.addAll(_commonDirtTags);
@@ -283,34 +289,7 @@ Future<String> getResultsXml(
     } catch (_) {
       return html;
     }
-  } on results_html_downloader.DownloadFailed catch (e) {
-    throw GetResultsXmFailed('GetResultsXmFailed, ${e.toString()}');
-  }
-}
-
-String _replaceTable(String html) {
-  return html
-      .replaceAll('TABLE BORDER ', 'TABLE')
-      .replaceAll('table border', 'table');
-}
-
-Future<String> getSimplifiedMenuHtml(
-  String url, {
-  Set<DirtyTag> dirtyTags,
-  List<String> keepTags = const <String>[],
-  List<String> keepAttributes = const <String>['href'],
-}) async {
-  try {
-    var html = await results_html_downloader.download(url);
-
-    if (dirtyTags != null) {
-      html = await removeDirtyTags(html, dirtyTags);
-    }
-
-    html = await removeAttributes(html, keepAttributes: keepAttributes);
-    html = await removeEmptyTags(html, keepTags: keepTags);
-    return _replaceTable(html);
-  } on results_html_downloader.DownloadFailed catch (e) {
-    throw GetResultsXmFailed('GetMenuXmFailed, ${e.toString()}');
+  } on html_downloader.DownloadFailed catch (e) {
+    throw GetCleanedHtmlFailed('GetCleanedHtmlFailed, ${e.toString()}');
   }
 }

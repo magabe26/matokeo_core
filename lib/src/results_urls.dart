@@ -3,7 +3,6 @@
  * Author Edwin Magabe    edyma50@yahoo.com
  */
 
-
 typedef String BaseUrlFinalizer(String baseUrl);
 
 class ResultsUrls {
@@ -41,7 +40,6 @@ class ResultsUrls {
   }
 
   static String getResultsPath(String url) {
-    //some paths contain \ ,so stupid ,those who built the necta site
     var list = url.replaceAll('\\', '/').split("/");
     if (list.isNotEmpty) {
       return list[list.length - 1];

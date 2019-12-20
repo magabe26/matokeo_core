@@ -28,7 +28,7 @@ final resultsParser = ResultsParsers();
 
 void run_results_xml_to_string_decoder_example() async {
   try {
-    var xml = await getResultsXml(links[0], keepTags: const <String>[
+    var xml = await getCleanedHtml(links[0], keepTags: const <String>[
       'a',
       'td',
       'h1',
@@ -44,7 +44,7 @@ void run_results_xml_to_string_decoder_example() async {
         .listen((String str) {
       print('Result Str -> $str \n\n');
     });
-  } on GetResultsXmFailed catch (e) {
+  } on GetCleanedHtmlFailed catch (e) {
     print(e);
   } catch (e) {
     print(e);

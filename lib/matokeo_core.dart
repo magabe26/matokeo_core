@@ -7,7 +7,7 @@ library matokeo_core;
 
 export 'src/mbloc.dart';
 export 'src/mdownloader.dart';
-export 'src/results_xml.dart';
+export 'src/cleaned_html.dart';
 export 'src/mdecoder.dart';
 export 'src/mparser_mixin.dart';
 export 'src/xmlstring_decoder.dart';
