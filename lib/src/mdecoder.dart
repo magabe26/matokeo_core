@@ -7,12 +7,12 @@ import 'dart:convert';
 import 'package:petitparser/petitparser.dart';
 import 'package:meta/meta.dart';
 
-import 'xml_to_stream.dart';
+import 'string_to_stream.dart';
 
-///Any NECTA results decoder must extend this class. A subclass must pass a parser
-///which is responsible for the parsing
-abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
-  const ResultsXmlDecoder(this.parser) : assert(parser != null);
+///Subclass this class to build a decoder that decode a formatted string(xml ,html etc) into dart Objects,
+///It uses a parser which is responsible for the parsing.
+abstract class MDecoder<T> extends Converter<String, List<T>> {
+  const MDecoder(this.parser) : assert(parser != null);
 
   final Parser parser;
 
@@ -44,7 +44,7 @@ abstract class ResultsXmlDecoder<T> extends Converter<String, List<T>> {
   }
 
   Stream<T> decode(String input) {
-    return xmlToStream(input).transform(this).expand((i) => i);
+    return stringToStream(input).transform(this).expand((i) => i);
   }
 }
 
@@ -95,8 +95,7 @@ class _ResultsDecoderSink<T> extends StringConversionSinkBase {
   @override
   void close() {
     if (carry.isNotEmpty) {
-      throw Exception(
-          'ResultsXmlDecoder:: Unable to parse remaining input: $carry');
+      throw Exception('MDecoder:: Unable to parse remaining input: $carry');
     }
     sink.close();
   }

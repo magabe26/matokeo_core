@@ -4,11 +4,11 @@
  */
 
 import 'package:petitparser/petitparser.dart';
-import 'results_xml_decoder.dart';
+import 'mdecoder.dart';
 
-///A simple example that shows how to implement ResultsXmlDecoder
-class ResultsXmlToStringDecoder extends ResultsXmlDecoder<String> {
-  ResultsXmlToStringDecoder(Parser parser) : super(parser);
+///A simple example that shows how to implement MDecoder
+class XmlStringDecoder extends MDecoder<String> {
+  XmlStringDecoder(Parser parser) : super(parser);
 
   @override
   String mapParserResult(String result) {

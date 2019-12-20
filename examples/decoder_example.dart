@@ -39,7 +39,7 @@ void run_results_xml_to_string_decoder_example() async {
       'tr'
     ]);
 
-    ResultsXmlToStringDecoder(resultsParser.tdLinkParser())
+    XmlStringDecoder(resultsParser.tdLinkParser())
         .decode(xml)
         .listen((String str) {
       print('Result Str -> $str \n\n');

@@ -15,14 +15,14 @@ class DownloadFailed implements Exception {
   }
 }
 
-Future<String> downloadResultsHtml(String url) async {
+Future<String> download(String url) async {
   try {
     http.Response response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return response.body;
     } else {
       throw DownloadFailed(
-          'Failed to download results: url = $url , Error=  statusCode : ${response.statusCode}');
+          'Failed to download: url = $url , Error=  statusCode : ${response.statusCode}');
     }
   } catch (e) {
     throw DownloadFailed('${e.toString()}');

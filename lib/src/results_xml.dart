@@ -8,7 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
-import 'results_html_downloader.dart' as results_html_downloader;
+import 'mdownloader.dart' as results_html_downloader;
 
 ///A tag that contains non-results information
 class DirtyTag extends Equatable {
@@ -266,7 +266,7 @@ Future<String> getResultsXml(
   bool removeCommonDirtTags = true,
 }) async {
   try {
-    var html = await results_html_downloader.downloadResultsHtml(url);
+    var html = await results_html_downloader.download(url);
 
     if ((dirtyTags != null) && removeCommonDirtTags) {
       dirtyTags.addAll(_commonDirtTags);
@@ -301,7 +301,7 @@ Future<String> getSimplifiedMenuHtml(
   List<String> keepAttributes = const <String>['href'],
 }) async {
   try {
-    var html = await results_html_downloader.downloadResultsHtml(url);
+    var html = await results_html_downloader.download(url);
 
     if (dirtyTags != null) {
       html = await removeDirtyTags(html, dirtyTags);

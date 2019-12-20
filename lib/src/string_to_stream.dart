@@ -5,6 +5,6 @@
 
 import 'dart:async';
 
-Stream<String> xmlToStream(String xml) async* {
-  yield xml ?? '';
+Stream<String> stringToStream(String str) async* {
+  yield str ?? '';
 }

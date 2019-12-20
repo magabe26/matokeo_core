@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 import 'dart:async';
 
 import 'mbloc.dart';
-import 'results_xml_decoder.dart';
+import 'mdecoder.dart';
 
 typedef void OnDone();
 typedef void DecoderListener<T>(T entity);
@@ -61,7 +61,7 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
 
   void decode<T>({
     @required String xml,
-    @required ResultsXmlDecoder<T> decoder,
+    @required MDecoder<T> decoder,
     @required DecoderListener<T> listener,
     @required OnDone onDone,
   }) {

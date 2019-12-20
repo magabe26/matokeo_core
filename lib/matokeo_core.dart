@@ -6,12 +6,12 @@
 library matokeo_core;
 
 export 'src/mbloc.dart';
-export 'src/results_html_downloader.dart';
+export 'src/mdownloader.dart';
 export 'src/results_xml.dart';
-export 'src/results_xml_decoder.dart';
+export 'src/mdecoder.dart';
 export 'src/mparser_mixin.dart';
-export 'src/results_xml_to_string_decoder.dart';
-export 'src/xml_to_stream.dart';
+export 'src/xmlstring_decoder.dart';
+export 'src/string_to_stream.dart';
 export 'src/cached_result_data.dart';
 export 'src/matokeo_bloc.dart';
 export 'src/text_to_map.dart';
