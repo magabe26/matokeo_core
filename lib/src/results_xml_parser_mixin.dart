@@ -17,7 +17,7 @@ mixin ResultsXmlParserMixin {
 
   Parser slash() => char('/');
 
-  Parser spaceOrNot() => whitespace().star();
+  Parser spaceOptional() => whitespace().star();
 
   Parser quote() => char('"') | char("'");
 
@@ -26,7 +26,7 @@ mixin ResultsXmlParserMixin {
   Parser repeat(Parser p, int times) => repeatRange(p, min: times, max: times);
 
   Parser repeatRange(Parser p, {@required int min, @required int max}) =>
-      spaceOrNot().seq(p).seq(spaceOrNot()).repeat(min, max);
+      spaceOptional().seq(p).seq(spaceOptional()).repeat(min, max);
 
   /// In the following examples
   ///    final str = '''
@@ -75,13 +75,13 @@ mixin ResultsXmlParserMixin {
   Parser elementStartTag(
       {String tag, int maxNoOfAttributes = 6, bool isClosed = false}) {
     final Parser attr =
-        spaceOrNot().seq(attribute().star()).repeat(1, maxNoOfAttributes);
+        spaceOptional().seq(attribute().star()).repeat(1, maxNoOfAttributes);
 
     Parser p = start()
         .seq((tag == null) ? letter().plus() : nonCaseSensitiveChars(tag))
-        .seq(spaceOrNot())
+        .seq(spaceOptional())
         .seq(attr)
-        .seq(spaceOrNot());
+        .seq(spaceOptional());
 
     if (isClosed) {
       p = p.seq(slash());
@@ -102,18 +102,18 @@ mixin ResultsXmlParserMixin {
   ///          <tag attr1 ="attribute1"> Text </tag>
   ///          <TAG> TEXT </TAG>
   ///       ''';
-  ///  innerElement('tag'); matches both  <tag attr1 ="attribute1"> Text </tag>
+  ///  element('tag'); matches both  <tag attr1 ="attribute1"> Text </tag>
   ///  and  <TAG> TEXT </TAG>
-  Parser innerElement(String tag, {Parser startTag, Parser endTag}) {
+  Parser element(String tag, {Parser startTag, Parser endTag}) {
     return ((startTag != null) ? startTag : elementStartTag(tag: tag))
-        .seq(spaceOrNot())
-        .seq(spaceOrNot()
+        .seq(spaceOptional())
+        .seq(spaceOptional()
             .seq(any()
                 .starLazy((endTag != null) ? endTag : elementEndTag(tag))
-                .flatten('innerElement: Expected any text'))
+                .flatten('element: Expected any text'))
             .pick(1)
             .optional(''))
-        .seq(spaceOrNot())
+        .seq(spaceOptional())
         .seq((endTag != null) ? endTag : elementEndTag(tag));
   }
 
@@ -122,14 +122,14 @@ mixin ResultsXmlParserMixin {
   ///        <tr>  <tag attr1 ="attribute1"> Text </tag> </tr>
   ///          <TAG> TEXT </TAG>
   ///       ''';
-  ///  outerElement("tr",innerElement('tag'));
+  ///  parentElement("tr",element('tag'));
   ///  matches  <tr>  <tag attr1 ="attribute1"> Text </tag> </tr>
-  Parser outerElement(String tag, Parser innerElement,
+  Parser parentElement(String tag, Parser element,
       {Parser startTag, Parser endTag}) {
     return ((startTag != null) ? startTag : elementStartTag(tag: tag))
-        .seq(spaceOrNot())
-        .seq(innerElement)
-        .seq(spaceOrNot())
+        .seq(spaceOptional())
+        .seq(element)
+        .seq(spaceOptional())
         .seq((endTag != null) ? endTag : elementEndTag(tag));
   }
 }
