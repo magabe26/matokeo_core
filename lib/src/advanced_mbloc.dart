@@ -12,10 +12,10 @@ import 'mdecoder.dart';
 typedef void OnDone();
 typedef void DecoderListener<T>(T entity);
 
-class MatokeoBlocException implements Exception {
+class AdvancedMBlocException implements Exception {
   final String message;
 
-  MatokeoBlocException(this.message);
+  AdvancedMBlocException(this.message);
 
   @override
   String toString() {
@@ -23,7 +23,7 @@ class MatokeoBlocException implements Exception {
   }
 }
 
-abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
+abstract class AdvancedMBloc<E, S> extends MBloc<E, S> {
   Completer<void> _completer;
   StreamSubscription _subscription;
   Stream _stream;
@@ -38,7 +38,7 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
 
   Future<void> load(String xml, {String baseUrl}) async {
     if (xml == null || xml.isEmpty) {
-      throw MatokeoBlocException('xml is null or empty');
+      throw AdvancedMBlocException('xml is null or empty');
     }
 
     if ((_completer != null) && (!_completer.isCompleted)) {
@@ -53,7 +53,7 @@ abstract class MatokeoBloc<E, S> extends MBloc<E, S> {
     try {
       dispatchEvents(xml, baseUrl: baseUrl);
     } catch (e) {
-      throw MatokeoBlocException(e.toString());
+      throw AdvancedMBlocException(e.toString());
     }
   }
 

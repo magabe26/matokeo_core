@@ -5,7 +5,7 @@
 
 typedef String BaseUrlFinalizer(String baseUrl);
 
-class ResultsUrls {
+class Urls {
   static String getBaseUrl(String url, {BaseUrlFinalizer baseUrlFinalizer}) {
     String bUrl;
     String protocolStr;
