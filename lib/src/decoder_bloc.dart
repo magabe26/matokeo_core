@@ -12,10 +12,10 @@ import 'mdecoder.dart';
 typedef void OnDone();
 typedef void DecoderListener<T>(T entity);
 
-class AdvancedMBlocException implements Exception {
+class DecoderBlocException implements Exception {
   final String message;
 
-  AdvancedMBlocException(this.message);
+  DecoderBlocException(this.message);
 
   @override
   String toString() {
@@ -23,7 +23,7 @@ class AdvancedMBlocException implements Exception {
   }
 }
 
-abstract class AdvancedMBloc<E, S> extends MBloc<E, S> {
+abstract class DecoderBloc<E, S> extends MBloc<E, S> {
   Completer<void> _completer;
   StreamSubscription _subscription;
   Stream _stream;
@@ -36,9 +36,9 @@ abstract class AdvancedMBloc<E, S> extends MBloc<E, S> {
     }
   }
 
-  Future<void> load(String xml, {String baseUrl}) async {
-    if (xml == null || xml.isEmpty) {
-      throw AdvancedMBlocException('xml is null or empty');
+  Future<void> load(String input, {String baseUrl}) async {
+    if (input == null || input.isEmpty) {
+      throw DecoderBlocException('input is null or empty');
     }
 
     if ((_completer != null) && (!_completer.isCompleted)) {
@@ -51,9 +51,9 @@ abstract class AdvancedMBloc<E, S> extends MBloc<E, S> {
     await _unsubscribe();
 
     try {
-      dispatchEvents(xml, baseUrl: baseUrl);
+      dispatchEvents(input, baseUrl: baseUrl);
     } catch (e) {
-      throw AdvancedMBlocException(e.toString());
+      throw DecoderBlocException(e.toString());
     }
   }
 
