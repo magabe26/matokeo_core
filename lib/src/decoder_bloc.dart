@@ -57,20 +57,20 @@ abstract class DecoderBloc<E, S> extends MBloc<E, S> {
     }
   }
 
-  void dispatchEvents(String xml, {String baseUrl});
+  void dispatchEvents(String input, {String baseUrl});
 
   void decode<T>({
-    @required String xml,
+    @required String input,
     @required MDecoder<T> decoder,
     @required DecoderListener<T> listener,
     @required OnDone onDone,
   }) {
-    _stream = decoder.decode(xml);
+    _stream = decoder.decode(input);
     _subscription = _stream.listen(listener, onDone: onDone);
   }
 
   /// A subclass must call this when loading is completed
-  /// so to be able to reload or load new xml using this block
+  /// tobe able to reload or load new input using this block
   void complete() {
     if (!_completer.isCompleted) {
       _completer.complete();
