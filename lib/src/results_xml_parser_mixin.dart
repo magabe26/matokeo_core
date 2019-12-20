@@ -4,8 +4,10 @@
  */
 
 import 'package:petitparser/petitparser.dart';
+import 'package:meta/meta.dart';
 
-const _otherPermittedAttributeValueChars = ':./?&=%#_@-\\'; //They sometimes use \ instead of / by mistake
+const _otherPermittedAttributeValueChars =
+    ':./?&=%#_@-\\'; //They sometimes use \ instead of / by mistake
 
 ///Any results parser must mix with this mixin
 mixin ResultsXmlParserMixin {
@@ -20,6 +22,11 @@ mixin ResultsXmlParserMixin {
   Parser quote() => char('"') | char("'");
 
   Parser equal() => char('=');
+
+  Parser repeat(Parser p, int times) => repeatRange(p, min: times, max: times);
+
+  Parser repeatRange(Parser p, {@required int min, @required int max}) =>
+      spaceOrNot().seq(p).seq(spaceOrNot()).repeat(min, max);
 
   /// In the following examples
   ///    final str = '''
