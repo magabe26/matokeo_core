@@ -9,8 +9,8 @@ import 'package:meta/meta.dart';
 const _otherPermittedAttributeValueChars =
     ':./?&=%#_@-\\'; //They sometimes use \ instead of / by mistake
 
-///Any results parser must mix with this mixin
-mixin ResultsXmlParserMixin {
+///Any parser that wishes to parse xml or html must mix with this mixin
+mixin MParserMixin {
   Parser start() => char('<');
 
   Parser end() => char('>');

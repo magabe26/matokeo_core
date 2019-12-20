@@ -14,14 +14,14 @@ const links = [
 ];
 
 ///assuming the tags for inner and upper are in the same case( uppercase or lowercase)
-class ResultsParsers with ResultsXmlParserMixin {
+class ResultsParsers with MParserMixin {
   ///The parsed td element
   ///
   ///   <td>
   ///      <a href="https://www.necta.go.tz/results/2017/psle/results/reg_27.htm">SIMIYU</a>
   ///   </td>
   ///
-  Parser tdLinkParser() => outerElement('td', innerElement('a'));
+  Parser tdLinkParser() => parentElement('td', element('a'));
 }
 
 final resultsParser = ResultsParsers();
@@ -51,6 +51,27 @@ void run_results_xml_to_string_decoder_example() async {
   }
 }
 
+class P with MParserMixin {
+  Parser myParser() => parentElement('td', element('a')).flatten();
+  Parser myParser1() => parentElement('div', repeat(myParser(), 6)).flatten();
+}
+
 main() {
-  run_results_xml_to_string_decoder_example();
+  //run_results_xml_to_string_decoder_example();
+
+  var txt = ''' 
+  <div>
+  
+  <td>  <a href="link1"> </a> </td>
+  
+  <td><a href="link2"> </a></td>
+  
+  <td><a href="link3"> </a></td>
+  
+  <td><a href="link4"> </a></td>
+  <td><a href="link4"> </a></td><td><a href="link4"> </a></td>
+  </div>
+  ''';
+
+  print(P().myParser1().matchesSkipping(txt));
 }

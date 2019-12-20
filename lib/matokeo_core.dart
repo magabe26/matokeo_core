@@ -9,7 +9,7 @@ export 'src/mbloc.dart';
 export 'src/results_html_downloader.dart';
 export 'src/results_xml.dart';
 export 'src/results_xml_decoder.dart';
-export 'src/results_xml_parser_mixin.dart';
+export 'src/mparser_mixin.dart';
 export 'src/results_xml_to_string_decoder.dart';
 export 'src/xml_to_stream.dart';
 export 'src/cached_result_data.dart';
