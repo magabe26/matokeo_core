@@ -250,19 +250,21 @@ class GetResultsXmFailed implements Exception {
 
 ///The xml returned is not checked by the function ,so it maybe invalid
 ///if you wish to keep one or more CommonDirtTags , set  removeCommonDirtTags = false
-Future<String> getResultsXml(String url,
-    {Set<DirtyTag> dirtyTags,
-    List<String> keepTags = const <String>[
-      'a',
-      'td',
-      'h1',
-      'h2',
-      'h3',
-      'table',
-      'body'
-    ],
-    List<String> keepAttributes = const <String>['href'],
-    bool removeCommonDirtTags = true}) async {
+Future<String> getResultsXml(
+  String url, {
+  Set<DirtyTag> dirtyTags,
+  List<String> keepTags = const <String>[
+    'a',
+    'td',
+    'h1',
+    'h2',
+    'h3',
+    'table',
+    'body'
+  ],
+  List<String> keepAttributes = const <String>['href'],
+  bool removeCommonDirtTags = true,
+}) async {
   try {
     var html = await results_html_downloader.downloadResultsHtml(url);
 
@@ -292,10 +294,12 @@ String _replaceTable(String html) {
       .replaceAll('table border', 'table');
 }
 
-Future<String> getSimplifiedMenuHtml(String url,
-    {Set<DirtyTag> dirtyTags,
-    List<String> keepTags = const <String>[],
-    List<String> keepAttributes = const <String>['href']}) async {
+Future<String> getSimplifiedMenuHtml(
+  String url, {
+  Set<DirtyTag> dirtyTags,
+  List<String> keepTags = const <String>[],
+  List<String> keepAttributes = const <String>['href'],
+}) async {
   try {
     var html = await results_html_downloader.downloadResultsHtml(url);
 

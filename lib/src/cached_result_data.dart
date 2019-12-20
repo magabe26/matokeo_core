@@ -14,12 +14,13 @@ class CachedResultData extends Equatable {
   final String url;
   final String xml;
 
-  CachedResultData(
-      {this.id,//not required because it is auto incremented
-      @required this.name,
-      @required this.year,
-      @required this.url,
-      @required this.xml});
+  CachedResultData({
+    this.id, //not required because it is auto incremented
+    @required this.name,
+    @required this.year,
+    @required this.url,
+    @required this.xml,
+  });
 
   @override
   List<Object> get props => [name, year, url, xml];
@@ -45,7 +46,7 @@ class CachedResultData extends Equatable {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      '_id':id,
+      '_id': id,
       'name': name,
       'year': year,
       'url': url,

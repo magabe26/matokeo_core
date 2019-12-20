@@ -7,7 +7,9 @@ import 'package:xml/xml.dart';
 
 class NonCaseSensitiveXmlElementsFinder {
   static Iterable<XmlElement> findAllElements(
-      XmlParent xmlParent, String name) {
+    XmlParent xmlParent,
+    String name,
+  ) {
     if ((xmlParent == null) || (name == null) || name.isEmpty) {
       return <XmlElement>[];
     }

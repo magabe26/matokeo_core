@@ -46,8 +46,12 @@ abstract class MBloc<E, S> {
     });
   }
 
-  void listen(void onData(S balance),
-      {Function onError, void onDone(), bool cancelOnError}) {
+  void listen(
+    void onData(S balance), {
+    Function onError,
+    void onDone(),
+    bool cancelOnError,
+  }) {
     _stateStreamSubscription = _stateStream.listen(onData,
         onError: onError, onDone: onDone, cancelOnError: cancelOnError);
   }
