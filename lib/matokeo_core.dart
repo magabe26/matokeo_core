@@ -5,11 +5,11 @@
 
 library matokeo_core;
 
-export 'src/mbloc.dart';
-export 'src/mdownloader.dart';
+export 'src/bloc.dart';
+export 'src/downloader.dart';
 export 'src/cleaned_html.dart';
-export 'src/mdecoder.dart';
-export 'src/mparser_mixin.dart';
+export 'src/decoder.dart';
+export 'src/parser_mixin.dart';
 export 'src/string_to_stream.dart';
 export 'src/cached_result_data.dart';
 export 'src/decoder_bloc.dart';

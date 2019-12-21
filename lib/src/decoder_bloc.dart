@@ -6,8 +6,8 @@
 import 'package:meta/meta.dart';
 import 'dart:async';
 
-import 'mbloc.dart';
-import 'mdecoder.dart';
+import 'bloc.dart';
+import 'decoder.dart';
 
 typedef void OnDone();
 typedef void DecoderListener<T>(T entity);
@@ -23,7 +23,7 @@ class DecoderBlocException implements Exception {
   }
 }
 
-abstract class DecoderBloc<E, S> extends MBloc<E, S> {
+abstract class DecoderBloc<E, S> extends Bloc<E, S> {
   Completer<void> _completer;
   StreamSubscription _subscription;
   Stream _stream;
@@ -61,7 +61,7 @@ abstract class DecoderBloc<E, S> extends MBloc<E, S> {
 
   void decode<T>({
     @required String input,
-    @required MDecoder<T> decoder,
+    @required Decoder<T> decoder,
     @required DecoderListener<T> listener,
     @required OnDone onDone,
   }) {

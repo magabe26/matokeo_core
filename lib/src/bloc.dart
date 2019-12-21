@@ -5,7 +5,7 @@
 
 import 'dart:async';
 
-abstract class MBloc<E, S> {
+abstract class Bloc<E, S> {
   final StreamController<E> _eventController = StreamController<E>();
   StreamSink<E> _eventsSink;
   Stream<E> _eventStream;
@@ -16,7 +16,7 @@ abstract class MBloc<E, S> {
   StreamSubscription<E> _eventStreamSubscription;
   StreamSubscription<S> _stateStreamSubscription;
 
-  MBloc() {
+  Bloc() {
     _statesSink = _stateController.sink;
     _stateStream = _stateController.stream;
 

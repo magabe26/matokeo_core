@@ -8,7 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:convert';
-import 'mdownloader.dart' as html_downloader;
+import 'downloader.dart' as html_downloader;
 
 ///A tag that contains non-results information
 class DirtyTag extends Equatable {

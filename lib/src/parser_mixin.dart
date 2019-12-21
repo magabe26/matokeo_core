@@ -10,7 +10,7 @@ const _otherPermittedAttributeValueChars =
     ':./?&=%#_@-\\'; //They sometimes use \ instead of / by mistake
 
 ///Any parser that wishes to parse any formatted string(xml ,html etc) must mix with this mixin
-mixin MParserMixin {
+mixin ParserMixin {
   Parser start() => char('<');
 
   Parser end() => char('>');

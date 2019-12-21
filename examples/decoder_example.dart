@@ -13,7 +13,7 @@ const links = [
   'http://localhost/primary/2017/psle/results/reg_19.htm'
 ];
 
-class XmlStringDecoder extends MDecoder<String> {
+class XmlStringDecoder extends Decoder<String> {
   ///The parsed td element
   ///
   ///   <td>
