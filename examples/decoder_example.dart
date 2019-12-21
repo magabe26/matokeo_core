@@ -13,18 +13,21 @@ const links = [
   'http://localhost/primary/2017/psle/results/reg_19.htm'
 ];
 
-///assuming the tags for inner and upper are in the same case( uppercase or lowercase)
-class ResultsParsers with MParserMixin {
+class XmlStringDecoder extends MDecoder<String> {
   ///The parsed td element
   ///
   ///   <td>
   ///      <a href="https://www.necta.go.tz/results/2017/psle/results/reg_27.htm">SIMIYU</a>
   ///   </td>
   ///
-  Parser tdLinkParser() => parentElement('td', element('a'));
-}
+  @override
+  Parser get parser => parentElement('td', element('a'));
 
-final resultsParser = ResultsParsers();
+  @override
+  String mapParserResult(String result) {
+    return result;
+  }
+}
 
 void run_results_xml_to_string_decoder_example() async {
   try {
@@ -39,9 +42,7 @@ void run_results_xml_to_string_decoder_example() async {
       'tr'
     ]);
 
-    XmlStringDecoder(resultsParser.tdLinkParser())
-        .decode(xml)
-        .listen((String str) {
+    XmlStringDecoder().decode(xml).listen((String str) {
       print('Result Str -> $str \n\n');
     });
   } on GetCleanedHtmlFailed catch (e) {
@@ -51,35 +52,6 @@ void run_results_xml_to_string_decoder_example() async {
   }
 }
 
-class P extends MDecoder<String> with MParserMixin {
-  P(Parser parser) : super(myParser());
-
-  Parser myParser() => parentElement('td', element('a')).flatten();
-  Parser myParser1() => parentElement('div', repeat(myParser(), 6)).flatten();
-
-  @override
-  String mapParserResult(String result) {
-    // TODO: implement mapParserResult
-    return null;
-  }
-}
-
 main() {
-  //run_results_xml_to_string_decoder_example();
-
-  var txt = ''' 
-  <div>
-  
-  <td>  <a href="link1"> </a> </td>
-  
-  <td><a href="link2"> </a></td>
-  
-  <td><a href="link3"> </a></td>
-  
-  <td><a href="link4"> </a></td>
-  <td><a href="link4"> </a></td><td><a href="link4"> </a></td>
-  </div>
-  ''';
-
-  print(P().myParser1().matchesSkipping(txt));
+  run_results_xml_to_string_decoder_example();
 }

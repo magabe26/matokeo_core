@@ -7,11 +7,13 @@ import 'dart:convert';
 import 'package:petitparser/petitparser.dart';
 import 'package:meta/meta.dart';
 
+import '../matokeo_core.dart';
 import 'string_to_stream.dart';
 
 ///Subclass this class to build a decoder that decode a formatted string(xml ,html etc) into dart Objects,
 ///It uses a parser which is responsible for the parsing.
-abstract class MDecoder<T> extends Converter<String, List<T>> {
+abstract class MDecoder<T> extends Converter<String, List<T>>
+    with MParserMixin {
   ///A parser responsible for all decoder parsing, must not be null.
   Parser get parser;
 

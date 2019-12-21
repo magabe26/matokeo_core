@@ -10,7 +10,6 @@ export 'src/mdownloader.dart';
 export 'src/cleaned_html.dart';
 export 'src/mdecoder.dart';
 export 'src/mparser_mixin.dart';
-export 'src/xmlstring_decoder.dart';
 export 'src/string_to_stream.dart';
 export 'src/cached_result_data.dart';
 export 'src/decoder_bloc.dart';
