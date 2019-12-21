@@ -12,14 +12,17 @@ import 'string_to_stream.dart';
 ///Subclass this class to build a decoder that decode a formatted string(xml ,html etc) into dart Objects,
 ///It uses a parser which is responsible for the parsing.
 abstract class MDecoder<T> extends Converter<String, List<T>> {
-  const MDecoder(this.parser) : assert(parser != null);
-
-  final Parser parser;
+  ///A parser responsible for all decoder parsing, must not be null.
+  Parser get parser;
 
   List<String> convertStringList({@required String input}) {
     int end = RangeError.checkValidRange(0, null, input.length);
     var xml = input.substring(0, end);
-    return parser.flatten().matchesSkipping(xml);
+    if (parser == null) {
+      return <String>[];
+    } else {
+      return parser.flatten().matchesSkipping(xml);
+    }
   }
 
   ///Map each parser result to a type T Object

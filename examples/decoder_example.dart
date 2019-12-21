@@ -51,9 +51,17 @@ void run_results_xml_to_string_decoder_example() async {
   }
 }
 
-class P with MParserMixin {
+class P extends MDecoder<String> with MParserMixin {
+  P(Parser parser) : super(myParser());
+
   Parser myParser() => parentElement('td', element('a')).flatten();
   Parser myParser1() => parentElement('div', repeat(myParser(), 6)).flatten();
+
+  @override
+  String mapParserResult(String result) {
+    // TODO: implement mapParserResult
+    return null;
+  }
 }
 
 main() {
