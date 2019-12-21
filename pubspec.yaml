@@ -15,6 +15,9 @@ dependencies:
   petitparser: ^2.4.0
   xml: ^3.5.0
   equatable: ^1.0.1
+  magabe_simple_smart_scraper:
+   git:
+     url: A:/DART_PROJECTS/magabe_simple_smart_scraper/.git
 
 dev_dependencies:
   pedantic: ^1.8.0

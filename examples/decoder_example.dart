@@ -3,7 +3,7 @@
  * Author Edwin Magabe    edyma50@yahoo.com
  */
 
-import 'package:matokeo_core/matokeo_core.dart';
+import 'package:magabe_simple_smart_scrape/magabe_simple_smart_scraper.dart';
 import 'package:petitparser/petitparser.dart';
 
 const links = [
