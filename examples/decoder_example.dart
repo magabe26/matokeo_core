@@ -43,7 +43,7 @@ void run_results_xml_to_string_decoder_example() async {
     ]);
 
     XmlStringDecoder().decode(xml).listen((String str) {
-      print('Result Str -> $str \n\n');
+      print('---> $str \n\n');
     });
   } on GetCleanedHtmlFailed catch (e) {
     print(e);
