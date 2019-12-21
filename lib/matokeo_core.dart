@@ -5,6 +5,6 @@
 
 library matokeo_core;
 
-export 'package:magabe_simple_smart_scrape/magabe_simple_smart_scraper.dart';
+export 'package:simple_smart_scraper/simple_smart_scraper.dart';
 export 'src/cached_result_data.dart';
 export 'src/matokeo_bloc_exception.dart';
