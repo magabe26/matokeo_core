@@ -9,11 +9,10 @@ environment:
 
 dependencies:
   path: ^1.6.0
-  path_provider: ^1.4.5
   http: ^0.12.0+2
   xml: ^3.5.0
   equatable: ^1.0.1
-  simple_smart_scraper: ^1.0.19
+  simple_smart_scraper: ^1.0.20
 
 dev_dependencies:
   pedantic: ^1.8.0
