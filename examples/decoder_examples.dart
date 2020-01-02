@@ -4,7 +4,7 @@
  */
 
 import 'package:simple_smart_scraper/simple_smart_scraper.dart';
-import 'package:petitparser/petitparser.dart';
+import 'package:simple_smart_scraper/petitparser_2.4.0.dart';
 
 const links = [
   'http://localhost/primary/2017/psle/results/psle.htm',
